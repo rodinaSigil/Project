@@ -1,0 +1,23 @@
+<plist>
+<array>
+
+<dict>
+ <key>title</key>
+ <string>Title1</string>
+ <key>subtitle</key>
+ <string>Subtitle2</string>
+ <key>image</key>
+ <string>flag0</string>
+</dict>
+
+<dict>
+ <key>title</key>
+ <string>Title2</string>
+ <key>subtitle</key>
+ <string>Subtitle3</string>
+ <key>image</key>
+ <string>flag0</string>
+</dict>
+
+</array>
+</plist>
