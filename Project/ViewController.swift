@@ -13,9 +13,9 @@ import UIKit
 class ViewController: UIViewController {
     
     // MARK: - ViewController Properties
-    @IBOutlet var table: UITableView! /*= UITableView()*/
-    let pathtolist = "https://backendlessappcontent.com/EE09D4F9-8B6E-F7DC-FFBD-56FE80B4A300/console/hafkgwjydgkfbbggwzqmvncssngzccvtmxwx/files/view/source.json"
-    var InfoManager: TableInfoManager?
+    @IBOutlet var table: UITableView!
+    let source_path = "https://backendlessappcontent.com/EE09D4F9-8B6E-F7DC-FFBD-56FE80B4A300/console/hafkgwjydgkfbbggwzqmvncssngzccvtmxwx/files/view/source.json"
+    var InfoManager: TableInfoManager! = URLInfoManager()
     let cell_id = "Cell"
     
     
@@ -29,14 +29,13 @@ class ViewController: UIViewController {
     // MARK: - TableView Creating
     func createTable()
     {
-        InfoManager = URLInfoManager()
-        InfoManager?.readData(source: pathtolist)
         self.table.rowHeight = UITableView.automaticDimension
-        self.table.register(UITableViewCell.self, forCellReuseIdentifier: cell_id)
+        self.table.register(CustomTableViewCell.self, forCellReuseIdentifier: cell_id)
+        self.table.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: cell_id)
         self.table.delegate = self
-        self.table.dataSource = self
-        view.addSubview(self.table)
-        
+       // self.table.dataSource = self
+        self.table.dataSource = nil
+        InfoManager!.readData(source: source_path, block: { self.table.dataSource = self } )
     }
 
 }
@@ -47,20 +46,14 @@ extension ViewController : UITableViewDataSource
     
     // MARK: - DataSource Realization
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return InfoManager?.table_info.count ?? 0
+        return InfoManager!.table_info.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = table.dequeueReusableCell(withIdentifier: cell_id, for: indexPath)
-        cell.textLabel?.text = InfoManager?.table_info[indexPath.row].title
-        cell.detailTextLabel?.text = InfoManager?.table_info[indexPath.row].subtitle
-        //cell.imageView?.image = UIImage(named: InfoManager?.table_info[indexPath.row].image ?? "")
-        /*let image = InfoManager?.table_info[indexPath.row].image
-        if image != nil
-        {
-           
-        }*/
-        cell.imageView?.image = (InfoManager as! URLInfoManager).GetImage(ItemIndex: indexPath.row)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = table.dequeueReusableCell(withIdentifier: cell_id, for: indexPath) as! CustomTableViewCell
+        let item = InfoManager!.table_info[indexPath.row]
+        cell.TitleLabel?.text = item.title
+        cell.SubtitleLabel?.text = item.subtitle
         return cell
     }
 }
@@ -76,9 +69,8 @@ extension ViewController
 {
     @IBAction func refreshData(sender: UIButton)
     {
-        InfoManager?.readData(source: pathtolist)
-       // self.table.dataSource = nil
-      //  self.table.dataSource = self
+       
+
         self.table.reloadData()
     }
 }

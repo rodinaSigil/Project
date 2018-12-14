@@ -12,5 +12,5 @@ protocol TableInfoManager
 {
     var table_info : [TableStructure]{get}
     
-    func readData(source: String?)
+    func readData(source: String?, block:@escaping () -> (Void))
 }

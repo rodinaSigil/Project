@@ -17,7 +17,7 @@ class PlistInfoManager : TableInfoManager
         table_info = []
     }
     
-    func readData(source: String?) {
+    func readData(source: String?, block:@escaping () -> (Void)) {
         if  let source = source {
             table_info = []
             let array_of_items = NSArray(contentsOfFile: source) as? [[String:String]]

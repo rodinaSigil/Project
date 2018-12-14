@@ -18,11 +18,42 @@ class URLInfoManager : TableInfoManager
         table_info = []
     }
     
-    func readData(source: String?) {
+    func readData(source: String?, block:@escaping () -> (Void)) {
+        if let source = source
+        {
+            table_info = []
+            let url = URL(string: source)
+            let task = URLSession.shared.dataTask(with: url!) {
+                (data,response,error) -> Void in
+                guard error == nil else { return }
+                if let data = data
+                {
+                    do
+                    {
+                        let json_array = try? JSONSerialization.jsonObject(with: data, options: []) as! [[String:String]]
+                        if let json_array = json_array
+                        {
+                            for index in 0...json_array.count-1
+                            {
+                                self.table_info.append(TableStructure(info: json_array[index]))
+                            }
+                        }
+                        DispatchQueue.main.async {
+                            block()
+                        }
+                    }
+                    catch {
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
+    /*func readData(source: String?) {
         if let source = source
         {
              table_info = []
-            // let configs = URLSessionConfiguration.default
              let url = URL(string: source)
              if let url = url
              {
@@ -54,9 +85,9 @@ class URLInfoManager : TableInfoManager
             
             
         }
-    }
+    }*/
 
-    public func GetImage(ItemIndex: Int) -> UIImage
+    /*public func GetImage(ItemIndex: Int) -> UIImage?
     {
         var image = UIImage()
         if ItemIndex != nil, self.table_info != nil
@@ -80,16 +111,15 @@ class URLInfoManager : TableInfoManager
            }
             else
            {
-            return UIImage()
-            
+              return nil
             }
         }
         else
         {
-            return UIImage()
+            return nil
             
         }
-    }
+    }*/
     
 }
     
