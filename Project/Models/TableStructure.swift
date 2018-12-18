@@ -13,11 +13,10 @@ struct TableStructure {
     var subtitle: String = ""
     var image: String = ""
     
-    init (info: [String:String])
+    init (info: [String:AnyObject])
     {
-        self.title = info["title"]!
-        self.subtitle = info["subtitle"]!
-        self.image = info["image"]!
+        self.title = info["title"]! as! String
+        self.subtitle = info["subtitle"]! as! String
+        self.image = info["image"]! as! String
     }
-    
 }

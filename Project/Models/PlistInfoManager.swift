@@ -20,7 +20,7 @@ class PlistInfoManager : TableInfoManager
     func readData(source: String?, block:@escaping () -> (Void)) {
         if  let source = source {
             table_info = []
-            let array_of_items = NSArray(contentsOfFile: source) as? [[String:String]]
+            let array_of_items = NSArray(contentsOfFile: source) as? [[String:AnyObject]]
             for items in array_of_items ?? []
             {
                 table_info.append(TableStructure(info: items))

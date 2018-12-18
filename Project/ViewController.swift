@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 // MARK: - ViewController Initialization Part
 
@@ -14,9 +15,10 @@ class ViewController: UIViewController {
     
     // MARK: - ViewController Properties
     @IBOutlet var table: UITableView!
-    let source_path = "https://backendlessappcontent.com/EE09D4F9-8B6E-F7DC-FFBD-56FE80B4A300/console/hafkgwjydgkfbbggwzqmvncssngzccvtmxwx/files/view/source.json"
+    let source_path = "https://backendlessappcontent.com/5320F2D6-E3A1-93AE-FF2C-60A9F73F9500/console/korjvxnfwmlouxyxnnatgqyftruvysqhryxw/files/view/source.json"
     var InfoManager: TableInfoManager! = URLInfoManager()
     let cell_id = "Cell"
+
     
     
     
@@ -33,9 +35,8 @@ class ViewController: UIViewController {
         self.table.register(CustomTableViewCell.self, forCellReuseIdentifier: cell_id)
         self.table.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: cell_id)
         self.table.delegate = self
-       // self.table.dataSource = self
-        self.table.dataSource = nil
-        InfoManager!.readData(source: source_path, block: { self.table.dataSource = self } )
+        self.table.dataSource = self
+        InfoManager!.readData(source: source_path, block: { self.table.reloadData() } )
     }
 
 }
@@ -52,10 +53,12 @@ extension ViewController : UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = table.dequeueReusableCell(withIdentifier: cell_id, for: indexPath) as! CustomTableViewCell
         let item = InfoManager!.table_info[indexPath.row]
-        cell.TitleLabel?.text = item.title
-        cell.SubtitleLabel?.text = item.subtitle
+        cell.titleLabel?.text = item.title
+        cell.subtitleLabel?.text = item.subtitle
+        cell.setImage(URL: item.image)
         return cell
     }
+    
 }
 
 // MARK: - ViewController Delegate Part
@@ -67,10 +70,9 @@ extension ViewController: UITableViewDelegate
 // MARK: - ViewController Actions
 extension ViewController
 {
+    
     @IBAction func refreshData(sender: UIButton)
     {
-       
-
         self.table.reloadData()
     }
 }
