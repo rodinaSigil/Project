@@ -9,14 +9,16 @@
 import Foundation
 
 struct TableStructure {
+    var pkey: Int = -1
     var title: String = ""
     var subtitle: String = ""
     var image: String = ""
     
     init (info: [String:AnyObject])
     {
-        self.title = info["title"]! as! String
-        self.subtitle = info["subtitle"]! as! String
-        self.image = info["image"]! as! String
+        self.pkey = info["pkey"] as? Int ?? -1
+        self.title = info["title"] as? String ?? ""
+        self.subtitle = info["subtitle"] as? String ?? ""
+        self.image = info["image"] as? String ?? ""
     }
 }

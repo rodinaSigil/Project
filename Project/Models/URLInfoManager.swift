@@ -18,6 +18,12 @@ class URLInfoManager : TableInfoManager
         table_info = []
     }
     
+//    func sortByPrimaryKey()
+//    {
+//        table_info.sort(by: {$0.pkey > $1.pkey})
+////        table_info.sortInPlace{ $0.pkey > $1.pkey } // !!! ÔÓ Ë‰ÂÂ ˝ÚÓ ‰ÓÎÊÌÓ ·˚Ú¸ ÔÓ ‚ÓÁ‡ÒÚ‡ÌË˛
+//    }
+    
     func readData(source: String?, block:@escaping () -> (Void)) {
         if let source = source
         {
