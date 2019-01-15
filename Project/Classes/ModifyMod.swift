@@ -1,0 +1,4 @@
+enum ModifyMod
+{
+   insert, update
+}
