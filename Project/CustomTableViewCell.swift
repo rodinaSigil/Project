@@ -18,7 +18,7 @@ class CustomTableViewCell: UITableViewCell {
     
     @IBOutlet weak var subtitleLabel: UILabel!
     
-    let downloader = ImageDownloader()
+    //let downloader = ImageDownloader()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,13 +33,13 @@ class CustomTableViewCell: UITableViewCell {
     
     func setImage(URL: String)
     {
-        downloader.startDownload(url: URL) {
-            self.imageCustom!.image = self.downloader.tmp_image
-        }
+       // downloader.startDownload(url: URL) {
+         //   self.imageCustom!.image = self.downloader.tmp_image
+       // }
     }
     
     override func prepareForReuse() {
-        downloader.stopDownload()
+      //  downloader.stopDownload()
     }
     
 }

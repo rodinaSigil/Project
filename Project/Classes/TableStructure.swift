@@ -21,4 +21,14 @@ struct TableStructure {
         self.image = info["image"] as? String ?? ""
         self.detail = info["detail"] as? String ?? ""
     }
+    
+    init (pkey: Int, imgURL: String)
+    {
+        self.pkey = pkey
+        self.title = "test object"
+        self.subtitle = "test object"
+        self.image = imgURL
+        self.detail = "test object"
+    }
+    
 }

@@ -15,13 +15,12 @@ class ViewController: UIViewController {
     
     // MARK: - ViewController Properties
     @IBOutlet var table: UITableView!
-    let source_path = "https://backendlessappcontent.com/1635C9DF-95AF-D692-FF8F-6FB81E271200/console/gbjgkiqtxlfyrutkvgtpfdcaxceodegdgtmz/files/view/source.json"
+    let source_path = "https://develop.backendless.com/1635C9DF-95AF-D692-FF8F-6FB81E271200/FDE223AC-8187-63FC-FF2C-031A610D0900/data/University"
     var InfoManager: TableInfoManager! = URLInfoManager()
     let cell_id = "Cell"
     var coreDataManager: CoreDataManager!
- //   var indexRow: Int = -1
- //   var pictureRow: UIImage? = nil
 	var modForModifyVC: ModifyMod? = nil
+    var resManager: ResourceManager? = nil
 	
     // MARK: - ViewController Initialization
     override func viewDidLoad() {
@@ -29,7 +28,9 @@ class ViewController: UIViewController {
         self.coreDataManager = CoreDataManager(fetchedResultsControllerDelegate: self)
 		let addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
 		self.navigationItem.leftBarButtonItem = addBtn
-		let synchronizeBtn = UIBarButtonItem(title: "Synchronize", style: .done, target: self, action: #selector(refreshData))
+        let synchronizeBTN = UIBarButtonItem(title: "S", style: .done, target: self, action: #selector(refreshData))
+        self.navigationItem.rightBarButtonItem = synchronizeBTN
+        resManager = ResourceManager()
         createTable()
         self.coreDataManager.loadData()
     }
@@ -42,6 +43,8 @@ class ViewController: UIViewController {
         self.table.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: cell_id)
         self.table.delegate = self
         self.table.dataSource = self
+       // InfoManager!.readData(source: source_path, block: { self.table.reloadData() } )
+        
     }
 
 }
@@ -60,7 +63,8 @@ extension ViewController : UITableViewDataSource
         let item = coreDataManager.getObject(index: indexPath.row)
         cell.titleLabel?.text = item.title
         cell.subtitleLabel?.text = item.subtitle
-        cell.setImage(URL: item.imgurl ?? "")
+        //cell.setImage(URL: item.imgurl ?? "")
+        resManager!.feedImageView(sender: cell, url: item.imgurl ?? "")
         return cell
     }
     
@@ -75,7 +79,7 @@ extension ViewController: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
 		self.modForModifyVC = ModifyMod.update
-        self.performSegue(withIdentifier: "ToModify", sender: (cell, indexPath.row))
+        self.performSegue(withIdentifier: "ToModify", sender: (cell,indexPath.row))
     }
     
 }
@@ -84,18 +88,26 @@ extension ViewController: UITableViewDelegate
 extension ViewController
 {
     
-    func refreshData()
+    
+    @objc func refreshData()
     {
-	     if source_path != ""
-		 {
-		    let urlInfoManager = URLInfoManager() // !!!!!!!
-            urlInfoManager.readData(source: url) { 
-                coreDataManager.synchronizateData(data: urlInfoManager.table_info)
-            }
-		 }
+        resManager = ResourceManager()
+        var serverList: [TableStructure] = [
+            TableStructure(pkey: 1, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/The_University_of_California_UCLA.svg/800px-The_University_of_California_UCLA.svg.png"),
+             TableStructure(pkey: 2, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Inverted_Fountain%2C_UCLA.jpg/120px-Inverted_Fountain%2C_UCLA.jpg"),
+              TableStructure(pkey: 3, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/UCLA_hoodie.jpg/800px-UCLA_hoodie.jpg"),
+              TableStructure(pkey: 4, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Royce_Hall_post_rain.jpg/800px-Royce_Hall_post_rain.jpg"),
+              TableStructure(pkey: 5, imgURL: "https://upload.wikimedia.org/wikipedia/ru/1/1c/Harvard_shield.png"),
+               TableStructure(pkey: 6, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/John_Harvard_statue.jpg/800px-John_Harvard_statue.jpg"),
+               TableStructure(pkey: 7, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Harvard_college_-_annenberg_hall.jpg/800px-Harvard_college_-_annenberg_hall.jpg"),
+                TableStructure(pkey: 8, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Harvard_University_Massachusetts_Hall.jpg/800px-Harvard_University_Massachusetts_Hall.jpg"),
+                 TableStructure(pkey: 9, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/The_University_of_California_UCLA.svg/800px-The_University_of_California_UCLA.svg.png"),
+                  TableStructure(pkey: 10, imgURL: "https://upload.wikimedia.org/wikipedia/commons/4/43/Hbs-charles.jpg")
+                 ]
+        coreDataManager.synchronizateData(serverList: serverList)
     }
     
-    func addButtonTapped()
+    @objc func addButtonTapped()
 	{
 	   self.modForModifyVC = ModifyMod.insert
 	   self.performSegue(withIdentifier: "ToModify", sender: self)
@@ -109,12 +121,15 @@ extension ViewController
 			let destinationController = segue.destination as! ModifyViewController
 			if modForModifyVC == ModifyMod.update
             {
-			  destinationController.university = coreDataManager.getObject(index: ((sender as! (CustomTableViewCell, Int)).1))
-              destinationController.picture = ((sender as! (CustomTableViewCell, Int)).0).imageCustom!.image
-              destinationController.coreDataManager = self.coreDataManager
+              let pic = (((sender as! (UITableViewCell,Int)).0) as! CustomTableViewCell).imageCustom.image
+              let objInd = (sender as! (UITableViewCell,Int)).1
+              destinationController.university = coreDataManager.getObject(index: objInd)
+              destinationController.picture = pic
 			}
 			destinationController.mode = modForModifyVC
-	      }
+            destinationController.coreDataManager = self.coreDataManager
+            
+            }
         }
     }
     

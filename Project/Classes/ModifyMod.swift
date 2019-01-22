@@ -1,4 +1,14 @@
+//
+//  ModifyMod.swift
+//  Project
+//
+//  Created by Zeus on 20.01.2019.
+//  Copyright © 2019 Zeus. All rights reserved.
+//
+
+import Foundation
+
 enum ModifyMod
 {
-   insert, update
+    case insert, update
 }
