@@ -19,8 +19,8 @@ class ViewController: UIViewController {
     var InfoManager: TableInfoManager! = URLInfoManager()
     let cell_id = "Cell"
     var coreDataManager: CoreDataManager!
-    var indexRow: Int = -1
-    var pictureRow: UIImage? = nil
+ //   var indexRow: Int = -1
+ //   var pictureRow: UIImage? = nil
 	var modForModifyVC: ModifyMod? = nil
 	
     // MARK: - ViewController Initialization
@@ -73,11 +73,9 @@ extension ViewController: UITableViewDelegate
 {
     // MARK: - Delegate Realization
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        indexRow = indexPath.row
         let cell = tableView.cellForRow(at: indexPath)
-        pictureRow = (cell as! CustomTableViewCell).imageCustom.image
 		self.modForModifyVC = ModifyMod.update
-        self.performSegue(withIdentifier: "ToModify", sender: self)
+        self.performSegue(withIdentifier: "ToModify", sender: (cell, indexPath.row))
     }
     
 }
@@ -88,11 +86,10 @@ extension ViewController
     
     func refreshData()
     {
-      //  coreDataManager.synchronizateData(url: self.source_path)
 	     if source_path != ""
 		 {
 		    let urlInfoManager = URLInfoManager() // !!!!!!!
-            urlInfoManager.readData(source: url) { [weak self] in
+            urlInfoManager.readData(source: url) { 
                 coreDataManager.synchronizateData(data: urlInfoManager.table_info)
             }
 		 }
@@ -112,8 +109,8 @@ extension ViewController
 			let destinationController = segue.destination as! ModifyViewController
 			if modForModifyVC == ModifyMod.update
             {
-			  destinationController.university = coreDataManager.getObject(index: indexRow)
-              destinationController.picture = pictureRow
+			  destinationController.university = coreDataManager.getObject(index: ((sender as! (CustomTableViewCell, Int)).1))
+              destinationController.picture = ((sender as! (CustomTableViewCell, Int)).0).imageCustom!.image
               destinationController.coreDataManager = self.coreDataManager
 			}
 			destinationController.mode = modForModifyVC
