@@ -6,5 +6,5 @@ target 'Project' do
   use_frameworks!
 
   # Pods for Project
-  pod 'Backendless'
+ 
 end

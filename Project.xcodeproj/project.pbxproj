@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2445A6381E042DC7F6083DE7 /* Pods_Project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1CAA811A2B981E39662C25 /* Pods_Project.framework */; };
+		C0133E7F21F644F100A361B1 /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0133E7E21F644F100A361B1 /* ResourceManager.swift */; };
 		C02576A221BC02D900DA3A67 /* TableInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02576A121BC02D900DA3A67 /* TableInfoManager.swift */; };
 		C02576A421BC036C00DA3A67 /* PlistInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02576A321BC036C00DA3A67 /* PlistInfoManager.swift */; };
 		C02576A621BC1E7300DA3A67 /* URLInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02576A521BC1E7300DA3A67 /* URLInfoManager.swift */; };
@@ -16,6 +17,7 @@
 		C046DD7921B5919E00D26D62 /* TableStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046DD7821B5919E00D26D62 /* TableStructure.swift */; };
 		C0556E1F21EB8EE4004B1AFF /* ModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0556E1E21EB8EE4004B1AFF /* ModifyViewController.swift */; };
 		C074ECF821EB6588001DBBF2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C074ECF721EB6588001DBBF2 /* CoreDataManager.swift */; };
+		C08AC80621F4D8F60044F97D /* ModifyMod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08AC80521F4D8F60044F97D /* ModifyMod.swift */; };
 		C0DFF8D721B05E9E00CBD996 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DFF8D621B05E9E00CBD996 /* AppDelegate.swift */; };
 		C0DFF8D921B05E9E00CBD996 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DFF8D821B05E9E00CBD996 /* ViewController.swift */; };
 		C0DFF8DC21B05E9E00CBD996 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0DFF8DA21B05E9E00CBD996 /* Main.storyboard */; };
@@ -30,6 +32,7 @@
 		2C1CAA811A2B981E39662C25 /* Pods_Project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48461AC9F063C1CAABFAE56D /* Pods-Project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project/Pods-Project.release.xcconfig"; sourceTree = "<group>"; };
 		A91A36ABD2C616267DC86E2C /* Pods-Project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Project/Pods-Project.debug.xcconfig"; sourceTree = "<group>"; };
+		C0133E7E21F644F100A361B1 /* ResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		C02576A121BC02D900DA3A67 /* TableInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableInfoManager.swift; sourceTree = "<group>"; };
 		C02576A321BC036C00DA3A67 /* PlistInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistInfoManager.swift; sourceTree = "<group>"; };
 		C02576A521BC1E7300DA3A67 /* URLInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLInfoManager.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		C046DD7821B5919E00D26D62 /* TableStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableStructure.swift; sourceTree = "<group>"; };
 		C0556E1E21EB8EE4004B1AFF /* ModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyViewController.swift; sourceTree = "<group>"; };
 		C074ECF721EB6588001DBBF2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		C08AC80521F4D8F60044F97D /* ModifyMod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMod.swift; sourceTree = "<group>"; };
 		C0DFF8D321B05E9E00CBD996 /* Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0DFF8D621B05E9E00CBD996 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0DFF8D821B05E9E00CBD996 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 				C02576A521BC1E7300DA3A67 /* URLInfoManager.swift */,
 				C02B54A121C80DD50079DC6F /* ImageDownloader.swift */,
 				C074ECF721EB6588001DBBF2 /* CoreDataManager.swift */,
+				C08AC80521F4D8F60044F97D /* ModifyMod.swift */,
+				C0133E7E21F644F100A361B1 /* ResourceManager.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -140,7 +146,6 @@
 				C0DFF8CF21B05E9E00CBD996 /* Sources */,
 				C0DFF8D021B05E9E00CBD996 /* Frameworks */,
 				C0DFF8D121B05E9E00CBD996 /* Resources */,
-				2EFB41214EED99597DA0F873 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -200,30 +205,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2EFB41214EED99597DA0F873 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Project/Pods-Project-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Project/Pods-Project-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7F82AF2ACE2595BD9F286C23 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -255,6 +236,7 @@
 			files = (
 				C02576A421BC036C00DA3A67 /* PlistInfoManager.swift in Sources */,
 				C02B54A521C82A1A0079DC6F /* MyModel.xcdatamodeld in Sources */,
+				C08AC80621F4D8F60044F97D /* ModifyMod.swift in Sources */,
 				C02576A221BC02D900DA3A67 /* TableInfoManager.swift in Sources */,
 				C02B54A221C80DD50079DC6F /* ImageDownloader.swift in Sources */,
 				C0DFF8D921B05E9E00CBD996 /* ViewController.swift in Sources */,
@@ -262,6 +244,7 @@
 				C0DFF8D721B05E9E00CBD996 /* AppDelegate.swift in Sources */,
 				C046DD7921B5919E00D26D62 /* TableStructure.swift in Sources */,
 				C074ECF821EB6588001DBBF2 /* CoreDataManager.swift in Sources */,
+				C0133E7F21F644F100A361B1 /* ResourceManager.swift in Sources */,
 				C0556E1F21EB8EE4004B1AFF /* ModifyViewController.swift in Sources */,
 				C02576A621BC1E7300DA3A67 /* URLInfoManager.swift in Sources */,
 			);
@@ -324,6 +307,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -347,6 +331,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 			};
 			name = Debug;
 		};
@@ -385,6 +370,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -401,6 +387,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -418,7 +405,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ChtoEto.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -437,7 +424,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ChtoEto.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
