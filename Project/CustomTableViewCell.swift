@@ -39,7 +39,11 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-      //  downloader.stopDownload()
+        super.prepareForReuse()
+        imageCustom.image = nil
+        titleLabel.text = nil
+        subtitleLabel.text = nil
+        
     }
     
 }

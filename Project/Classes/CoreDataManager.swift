@@ -49,29 +49,16 @@ class CoreDataManager
         self.fetchedResultsController.delegate = fetchedResultsControllerDelegate
     }
     
-    func addItem(/*objId: String,*/key: Int, title: String, subtitle: String, imgurl: String, detail: String)
+    func addItem(key: Int, title: String, subtitle: String, imgurl: String, detail: String) -> Universities
     {
         let info = Universities(context: self.context)
-        //info.objectId = objId
-		info.pkey = Int32(key)
+        info.pkey = Int32(key)
         info.title = title
         info.subtitle = subtitle
         info.imgurl = imgurl
         info.detail = detail
+        return info
     }
-	
-	/*
-	func addItem(university: Universities)
-	{
-	  let info = Universities(context: self.context)
-	  info.objectId = university.objectId
-	  info.pkey = university.pkey
-      info.title = university.title
-      info.subtitle = university.subtitle
-      info.imgurl = university.imgurl
-      info.detail = university.detail
-	}
-	*/
     
     func updateItem(item: Universities, new_title: String, new_subtitle: String, new_imgurl: String, new_detail: String)
     {
@@ -102,10 +89,6 @@ class CoreDataManager
         guard let sections = fetchedResultsController.sections else { return 0 }
         return sections[section].numberOfObjects
     }
-	
-	/*
-	 
-	*/
     
     private func mergeChangesFromServer(serverList: [TableStructure])
     {
@@ -113,7 +96,7 @@ class CoreDataManager
         serverList.sort(by: {$0.pkey < $1.pkey})
         if let clientList = fetchedResultsController.fetchedObjects
         {
-           /* var indexServer = 0
+            var indexServer = 0
             var indexClient = 0
             while indexServer < serverList.count || indexClient < clientList.count
             {
@@ -149,66 +132,7 @@ class CoreDataManager
                     self.addItem(key: serverList[indexServer].pkey, title: serverList[indexServer].title, subtitle: serverList[indexServer].subtitle, imgurl: serverList[indexServer].image, detail: serverList[indexServer].detail)
                     indexServer = indexServer + 1
                 }
-            }*/
-			/*********************************************************************************************************************************/
-			/*
-			  var serverKeySet: Set<String>()
-			  var clientKeySet: Set<String>()
-			  for i in 0...serverList.count-1
-			  {
-			    serverKeySet.insert(serverList[i].objectId)
-			  }
-			  for i in 0...clientList.count-1
-			  {
-			    clientKeySet.insert(clientList[i].objectId)
-			  }
-			  let addKeySet = serverKeySet.subtracting(clientKeySet)
-			  let deleteKeySet = clientKeySet.subtracting(serverKeySet)
-			  let updateKeySet = serverKeySet.intersection(clientKeySet)
-			  for i in 0...clientList.count-1
-			  {
-			    if deleteKeySet.contains(clientList[i].objectId)
-				 {
-				   self.context.delete(clientList[i])
-				 }
-			  }
-			  for i in 0...serverList.count-1
-			  {
-			    if addKeySet.contains(serverList[i].objectId)
-				{
-				  self.addItem(serverList[i].convertToUniversity())
-				}
-			  }
-			  
-			*/
-			/*********************************************************************************************************************************/
-			/*
-			  var serverSet: Set<Universities>()
-			  var clientSet: Set<Universities>()
-			  for i in 0...serverList.count-1
-			  {
-			    serverSet.insert(serverList[i].convertToUniversity())
-			  }
-			  for i in 0...clientList.count-1
-			  {
-			    clientSet.insert(clientList[i])
-			  }
-			  let addSet = serverKey.subtracting(clientSet)
-			  let deleteSet = clientKey.subtracting(serverSet)
-			  let updateSet = serverKey.intersection(clientSet)
-			  for item in addSet 
-			  {
-			    self.addItem(university: item)
-			  }
-			  for item in deleteSet
-			  {
-			    self.context.delete(item)
-			  }
-			  for item in updateSet
-			  {
-			     //self.updateItem(item: clientList[indexClient], new_title: serverList[indexServer].title, new_subtitle: serverList[indexServer].subtitle, new_imgurl: serverList[indexServer].image, new_detail: serverList[indexServer].detail)
-			  }
-			*/
+            }
             self.saveChangesInContext()
         }
     }

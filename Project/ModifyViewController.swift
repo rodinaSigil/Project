@@ -23,11 +23,13 @@ class ModifyViewController: UIViewController {
     
     weak var university: Universities! = Universities()
     weak var picture: UIImage? = nil
-    private var pathToImage: String? = ""
+	// var urlPicture: String? = nil
     weak var coreDataManager: CoreDataManager? = nil // ?????
 	var mode: ModifyMod = ModifyMod.insert
     let serverPictureSavingPath = "https://api.backendless.com/1635C9DF-95AF-D692-FF8F-6FB81E271200/FDE223AC-8187-63FC-FF2C-031A610D0900/files"
-    
+    var selectedImageName: String? = ""
+   // let resourceDownloader: ResourceDownloader? = nil
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		if (mode == .update)
@@ -39,7 +41,13 @@ class ModifyViewController: UIViewController {
 		}
         let submitBtn = UIBarButtonItem(title: "Submit", style: .done, target: self, action: #selector(submitButtonTapped))
         self.navigationItem.rightBarButtonItem = submitBtn
-        
+        //self.resourceDownloader = ResourceDownloader()
+		//self.resourceDownloader.initDownloading(self.urlPicture)
+		/*
+		 {
+		    pictureView.image = 
+		 }
+		*/
     }
     
     @IBAction func chooseImageButtonTouched(_ sender: UIButton) {
@@ -55,38 +63,40 @@ class ModifyViewController: UIViewController {
 	
 	func modifyItemIntoCoreData()
 	{
-       if self.pathToImage == ""
-       {
           if self.mode == ModifyMod.insert
           {
-             coreDataManager?.addItem(key: 0, title: self.titleBox.text, subtitle: subtitleBox.text, imgurl: "", detail: detailBox.text)
+            self.university = coreDataManager?.addItem(key: 0, title: self.titleBox.text, subtitle: subtitleBox.text, imgurl: "", detail: detailBox.text)
             coreDataManager?.saveChangesInContext()
           }
           if self.mode == ModifyMod.update
           {
-            coreDataManager?.updateItem(item: self.university, new_title: self.titleBox.text, new_subtitle: self.subtitleBox.text, new_imgurl: "", new_detail: self.detailBox.text)
+            coreDataManager?.updateItem(item: self.university, new_title: self.titleBox.text, new_subtitle: self.subtitleBox.text, new_imgurl: self.university.imgurl ?? "", new_detail: self.detailBox.text)
             coreDataManager?.saveChangesInContext()
           }
-       }
-        else
-       {
-          // upload image to server
-        
-        
-       }
+          if self.selectedImageName != ""
+		  {
+            if let selectedImageName = selectedImageName
+            {
+                sendToServer(withName: selectedImageName)
+                
+            }
+		  }
 	}
 	
-    func sendToServer()
+    func sendToServer(withName: String)
     {
         let serverManager = URLInfoManager()
-        var buf = Universities()
-        serverManager.sendImageToServer(name: "image.jpg", urlPath: serverPictureSavingPath, jpgdata: pictureView.image?.jpegData(compressionQuality: 0)! ?? nil, sender: buf)
+        serverManager.sendImageToServer(name: withName,
+                                        urlPath: serverPictureSavingPath,
+                                        jpgdata: pictureView.image?.jpegData(compressionQuality: 0)! ?? nil,
+                                        sender: self.university)
     }
     
     @objc func submitButtonTapped()
 	{
        //self.modifyItemIntoCoreData()
-       self.sendToServer()
+       //self.sendToServer()
+	   self.modifyItemIntoCoreData()
 	}
     
 
@@ -94,15 +104,15 @@ class ModifyViewController: UIViewController {
 
 extension ModifyViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        pathToImage = UIImagePickerController.InfoKey.originalImage.rawValue
-        if let pathToImage = pathToImage
-        {
-            let imageFromPC = info[pathToImage] as! UIImage
-            pictureView.image = imageFromPC
-        }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+    {
+        let imageFromPC = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        pictureView.image = imageFromPC
         self.dismiss(animated: true, completion: nil)
+        self.selectedImageName = (info[UIImagePickerController.InfoKey.imageURL] as! URL).lastPathComponent
     }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)

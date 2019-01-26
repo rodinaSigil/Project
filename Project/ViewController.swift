@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     let cell_id = "Cell"
     var coreDataManager: CoreDataManager!
 	var modForModifyVC: ModifyMod? = nil
-    var resManager: ResourceManager? = nil
+    let resDowmnloader: ResourceDownloader = ResourceDownloader()
 	
     // MARK: - ViewController Initialization
     override func viewDidLoad() {
@@ -30,9 +30,9 @@ class ViewController: UIViewController {
 		self.navigationItem.leftBarButtonItem = addBtn
         let synchronizeBTN = UIBarButtonItem(title: "S", style: .done, target: self, action: #selector(refreshData))
         self.navigationItem.rightBarButtonItem = synchronizeBTN
-        resManager = ResourceManager()
         createTable()
         self.coreDataManager.loadData()
+        
     }
     
     // MARK: - TableView Creating
@@ -63,13 +63,20 @@ extension ViewController : UITableViewDataSource
         let item = coreDataManager.getObject(index: indexPath.row)
         cell.titleLabel?.text = item.title
         cell.subtitleLabel?.text = item.subtitle
-        //cell.setImage(URL: item.imgurl ?? "")
-        resManager!.feedImageView(sender: cell, url: item.imgurl ?? "")
+        
+        if let url = item.imgurl {
+            if let data = self.resDowmnloader.resource(forUrl: url) {
+                cell.imageCustom.image = UIImage(data: data)
+            } else {
+                self.resDowmnloader.getResource(url: item.imgurl ?? "") { imageData in
+                    if let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell {
+                        cell.imageCustom.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
         return cell
     }
-    
-    
-    
 }
 
 // MARK: - ViewController Delegate Part
@@ -91,7 +98,7 @@ extension ViewController
     
     @objc func refreshData()
     {
-        resManager = ResourceManager()
+     
         var serverList: [TableStructure] = [
             TableStructure(pkey: 1, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/The_University_of_California_UCLA.svg/800px-The_University_of_California_UCLA.svg.png"),
              TableStructure(pkey: 2, imgURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Inverted_Fountain%2C_UCLA.jpg/120px-Inverted_Fountain%2C_UCLA.jpg"),
@@ -137,28 +144,15 @@ extension ViewController
 
 extension ViewController: NSFetchedResultsControllerDelegate {
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
-        return sectionName
-    }
-    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         table.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        switch type {
-        case .insert:
-            table.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
-        case .delete:
-            table.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
-        default:
-            return
-        }
-    }
-    
-    private func controller(controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        let indexPath = indexPath as IndexPath?
-        let newIndexPath = newIndexPath as IndexPath?
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
         switch type {
         case .insert:
             if let indexPath = newIndexPath {
@@ -166,11 +160,7 @@ extension ViewController: NSFetchedResultsControllerDelegate {
             }
         case .update:
             if let indexPath = indexPath {
-                guard let cell = table.cellForRow(at: indexPath) as? CustomTableViewCell else { break }
-                let item = coreDataManager.getObject(index: indexPath.row)
-                cell.titleLabel?.text = item.title
-                cell.subtitleLabel?.text = item.subtitle
-                cell.setImage(URL: item.imgurl ?? "")
+                table.reloadRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let indexPath = indexPath {
@@ -185,6 +175,8 @@ extension ViewController: NSFetchedResultsControllerDelegate {
             }
         }
     }
+    
+
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         table.endUpdates()
